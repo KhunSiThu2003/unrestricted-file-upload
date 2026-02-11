@@ -6,15 +6,13 @@ require_login();
 
 include __DIR__ . '/../components/header.php';
 ?>
-<section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-
-
-    <div class="w-full glass-card rounded-2xl overflow-hidden border border-rose-500/30 bg-gradient-to-b from-neutral-900/50 to-neutral-900/30">
+<section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 vuln-page">
+    <div class="w-full glass-card rounded overflow-hidden border border-rose-500/30 bg-neutral-900/40 vuln-card animate-card-in">
                 <!-- Panel Header -->
-                <div class="px-6 py-4 sm:px-8 sm:py-6 border-b border-rose-500/10 bg-gradient-to-r from-rose-900/10 to-rose-900/5">
+                <div class="px-6 py-4 sm:px-8 sm:py-6 border-b border-rose-500/10 bg-rose-900/10">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-600 to-rose-700 flex items-center justify-center">
+                            <div class="w-10 h-10 rounded bg-rose-600 flex items-center justify-center vuln-header-icon">
                                 <i class="fas fa-bug text-white"></i>
                             </div>
                             <div>
@@ -23,11 +21,11 @@ include __DIR__ . '/../components/header.php';
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 text-sm font-medium">
+                            <span class="badge-pulse inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 text-sm font-medium">
                                 <i class="fas fa-exclamation-triangle text-xs"></i>
                                 High Risk
                             </span>
-                            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-orange-500/15 text-orange-300 border border-orange-500/30 text-sm font-medium">
+                            <span class="badge-pulse badge-pulse-delay inline-flex items-center gap-1 px-3 py-1 rounded-full bg-orange-500/15 text-orange-300 border border-orange-500/30 text-sm font-medium">
                                 <i class="fas fa-radiation text-xs"></i>
                                 Vulnerable
                             </span>
@@ -47,8 +45,8 @@ include __DIR__ . '/../components/header.php';
 
                     <form id="vuln-upload-form" class="space-y-6">
                         <!-- File Upload Area -->
-                        <div class="border-2 border-dashed border-rose-500/30 rounded-2xl p-6 sm:p-8 text-center hover:border-rose-500/50 transition-colors duration-300 bg-neutral-900/30">
-                            <div class="mx-auto w-12 h-12 mb-4 rounded-full bg-rose-500/10 flex items-center justify-center">
+                        <div class="drop-zone border-2 border-dashed border-rose-500/30 rounded p-6 sm:p-8 text-center hover:border-rose-500/50 transition-all duration-300 bg-neutral-900/30 hover:bg-rose-900/10">
+                            <div class="mx-auto w-12 h-12 mb-4 rounded-full bg-rose-500/10 flex items-center justify-center drop-zone-icon">
                                 <i class="fas fa-cloud-upload-alt text-rose-400 text-xl"></i>
                             </div>
                             
@@ -58,15 +56,15 @@ include __DIR__ . '/../components/header.php';
                             <label for="vuln_file" class="cursor-pointer block">
                                 <h4 class="text-lg font-medium text-white mb-2">Upload any file type (dangerous)</h4>
                                 <p class="text-sm text-gray-400 mb-4">No restrictions: .php, .exe, .sh, etc. (Max 10MB)</p>
-                                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-medium transition-all duration-300 border border-rose-500/30">
-                                    <i class="fas fa-file-upload"></i>
+                                <div class="btn-choose inline-flex items-center gap-2 px-4 py-2 rounded bg-rose-600 hover:bg-rose-500 text-white font-medium transition-all duration-300 border border-rose-500/30 active:scale-95">
+                                    <i class="fas fa-file-upload btn-choose-icon"></i>
                                     <span>Choose File</span>
                                 </div>
                             </label>
                             
                             <!-- Selected file display -->
-                            <div id="selected-file" class="mt-4 hidden">
-                                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-rose-900/30 border border-rose-500/20">
+                            <div id="selected-file" class="mt-4 hidden selected-file-wrap">
+                                <div class="inline-flex items-center gap-3 px-4 py-2 rounded bg-rose-900/30 border border-rose-500/20 selected-file-inner">
                                     <i class="fas fa-file text-rose-400"></i>
                                     <span id="file-name" class="text-sm text-gray-300"></span>
                                     <button type="button" onclick="clearFileSelection()" class="text-gray-400 hover:text-white">
@@ -77,29 +75,29 @@ include __DIR__ . '/../components/header.php';
                         </div>
 
                         <!-- Vulnerability Indicators -->
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <div class="bg-neutral-900/40 rounded-xl p-3 text-center border border-rose-500/10">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 vuln-indicators">
+                            <div class="vuln-indicator bg-neutral-900/40 rounded p-3 text-center border border-rose-500/10">
                                 <div class="w-8 h-8 mx-auto mb-2 rounded-full bg-rose-500/10 flex items-center justify-center">
                                     <i class="fas fa-times-circle text-rose-400 text-sm"></i>
                                 </div>
                                 <p class="text-xs font-medium text-white">No Type Check</p>
                                 <p class="text-xs text-rose-400">All files accepted</p>
                             </div>
-                            <div class="bg-neutral-900/40 rounded-xl p-3 text-center border border-rose-500/10">
+                            <div class="vuln-indicator vuln-indicator-2 bg-neutral-900/40 rounded p-3 text-center border border-rose-500/10">
                                 <div class="w-8 h-8 mx-auto mb-2 rounded-full bg-rose-500/10 flex items-center justify-center">
                                     <i class="fas fa-expand-arrows-alt text-rose-400 text-sm"></i>
                                 </div>
                                 <p class="text-xs font-medium text-white">Large Files</p>
                                 <p class="text-xs text-rose-400">Up to 10MB</p>
                             </div>
-                            <div class="bg-neutral-900/40 rounded-xl p-3 text-center border border-rose-500/10">
+                            <div class="vuln-indicator vuln-indicator-3 bg-neutral-900/40 rounded p-3 text-center border border-rose-500/10">
                                 <div class="w-8 h-8 mx-auto mb-2 rounded-full bg-rose-500/10 flex items-center justify-center">
                                     <i class="fas fa-file-code text-rose-400 text-sm"></i>
                                 </div>
                                 <p class="text-xs font-medium text-white">Executable Files</p>
                                 <p class="text-xs text-rose-400">PHP, EXE allowed</p>
                             </div>
-                            <div class="bg-neutral-900/40 rounded-xl p-3 text-center border border-rose-500/10">
+                            <div class="vuln-indicator vuln-indicator-4 bg-neutral-900/40 rounded p-3 text-center border border-rose-500/10">
                                 <div class="w-8 h-8 mx-auto mb-2 rounded-full bg-rose-500/10 flex items-center justify-center">
                                     <i class="fas fa-folder-open text-rose-400 text-sm"></i>
                                 </div>
@@ -110,23 +108,22 @@ include __DIR__ . '/../components/header.php';
 
                         <!-- Upload Button -->
                         <button type="submit" 
-                                class="w-full group relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-semibold transition-all duration-300 border border-rose-500/30 overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-rose-400/0 via-rose-400/10 to-rose-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-                            <i class="fas fa-radiation text-lg relative z-10"></i>
-                            <span class="relative z-10">Upload (Vulnerable)</span>
+                                class="btn-upload w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-rose-600 hover:bg-rose-500 text-white font-semibold transition-all duration-300 border border-rose-500/30 active:scale-[0.98]">
+                            <i class="fas fa-radiation text-lg btn-upload-icon"></i>
+                            <span>Upload (Vulnerable)</span>
                         </button>
                     </form>
 
                     <!-- Uploaded File URL -->
-                    <div id="vuln-upload-link-wrapper" class="mt-6 hidden">
-                        <div class="bg-neutral-900/50 rounded-xl p-4 border border-rose-500/20">
+                    <div id="vuln-upload-link-wrapper" class="mt-6 hidden link-wrapper">
+                        <div class="link-wrapper-inner bg-neutral-900/50 rounded p-4 border border-rose-500/20">
                             <div class="flex items-center gap-2 mb-2">
                                 <i class="fas fa-link text-rose-400"></i>
                                 <h4 class="font-medium text-white">Uploaded File URL (Direct Access)</h4>
                             </div>
                             <div class="flex items-center gap-2">
-                                <code id="vuln-upload-link" class="flex-1 text-sm text-rose-300 bg-neutral-800/50 px-3 py-2 rounded-lg break-all hover:text-rose-200 transition-colors"></code>
-                                <button onclick="copyUrlToClipboard()" class="px-3 py-2 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition-colors">
+                                <code id="vuln-upload-link" class="flex-1 text-sm text-rose-300 bg-neutral-800/50 px-3 py-2 rounded break-all hover:text-rose-200 transition-colors"></code>
+                                <button onclick="copyUrlToClipboard()" class="px-3 py-2 rounded bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition-colors">
                                     <i class="fas fa-copy"></i>
                                 </button>
                             </div>
@@ -143,21 +140,21 @@ include __DIR__ . '/../components/header.php';
 <div id="toast-container" class="fixed bottom-4 right-4 sm:top-4 sm:right-4 space-y-2 z-50 max-w-xs sm:max-w-sm"></div>
 
 <!-- Upload Progress Modal -->
-<div id="upload-progress" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
-    <div class="glass-card rounded-2xl p-6 max-w-xs w-full mx-4 border border-rose-500/30">
+<div id="upload-progress" class="progress-overlay fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
+    <div class="progress-modal glass-card rounded p-6 max-w-xs w-full mx-4 border border-rose-500/30">
         <div class="text-center">
-            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-500/10 flex items-center justify-center">
-                <i class="fas fa-radiation text-rose-400 text-2xl"></i>
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-500/10 flex items-center justify-center progress-icon-wrap">
+                <i class="fas fa-radiation text-rose-400 text-2xl progress-icon"></i>
             </div>
             <h3 class="text-lg font-bold text-white mb-2">Uploading (Vulnerable)</h3>
             <p class="text-sm text-rose-400 mb-4"> No security checks in progress...</p>
             
             <!-- Progress Bar -->
-            <div class="w-full bg-neutral-800 rounded-full h-2 mb-4">
-                <div id="progress-bar" class="bg-gradient-to-r from-rose-500 to-rose-400 h-2 rounded-full w-0 transition-all duration-300"></div>
+            <div class="w-full bg-neutral-800 rounded-full h-2 mb-4 overflow-hidden">
+                <div id="progress-bar" class="progress-bar-fill bg-rose-500 h-2 rounded-full w-0"></div>
             </div>
             
-            <p id="progress-text" class="text-xs text-rose-400">Bypassing all security measures...</p>
+            <p id="progress-text" class="text-xs text-rose-400 progress-text">Bypassing all security measures...</p>
         </div>
     </div>
 </div>
@@ -172,12 +169,15 @@ include __DIR__ . '/../components/header.php';
             const file = input.files[0];
             fileNameDisplay.textContent = file.name;
             selectedFileDiv.classList.remove('hidden');
+            requestAnimationFrame(() => selectedFileDiv.classList.add('selected-file-visible'));
         }
     }
     
     function clearFileSelection() {
+        const selectedFileDiv = document.getElementById('selected-file');
         document.getElementById('vuln_file').value = '';
-        document.getElementById('selected-file').classList.add('hidden');
+        selectedFileDiv.classList.remove('selected-file-visible');
+        setTimeout(() => selectedFileDiv.classList.add('hidden'), 280);
     }
     
     // Copy URL to clipboard
@@ -236,15 +236,15 @@ include __DIR__ . '/../components/header.php';
             warning: 'fas fa-exclamation-triangle'
         };
         
-        const base = 'glass-card px-4 py-3 rounded-xl shadow-lg flex items-start gap-3 animate-slide-in ';
+        const base = 'glass-card toast-item px-4 py-3 rounded shadow-lg flex items-start gap-3 animate-slide-in ';
         if (type === 'success') {
-            toast.className = base + 'border-emerald-500/30 bg-gradient-to-r from-emerald-900/90 to-emerald-900/50';
+            toast.className = base + 'border-emerald-500/30 bg-emerald-900/80';
         } else if (type === 'error') {
-            toast.className = base + 'border-rose-500/30 bg-gradient-to-r from-rose-900/90 to-rose-900/50';
+            toast.className = base + 'border-rose-500/30 bg-rose-900/80';
         } else if (type === 'warning') {
-            toast.className = base + 'border-orange-500/30 bg-gradient-to-r from-orange-900/90 to-orange-900/50';
+            toast.className = base + 'border-orange-500/30 bg-orange-900/80';
         } else {
-            toast.className = base + 'border-blue-500/30 bg-gradient-to-r from-blue-900/90 to-blue-900/50';
+            toast.className = base + 'border-blue-500/30 bg-blue-900/80';
         }
         
         toast.innerHTML = `
@@ -259,9 +259,9 @@ include __DIR__ . '/../components/header.php';
         
         container.appendChild(toast);
         
-        // Auto-remove after 5 seconds
+        // Auto-remove after 5 seconds with exit animation
         setTimeout(() => {
-            toast.classList.add('opacity-0', 'translate-x-2');
+            toast.classList.add('toast-exit');
             toast.addEventListener('transitionend', () => toast.remove());
         }, 5000);
     }
@@ -286,8 +286,12 @@ include __DIR__ . '/../components/header.php';
                 return;
             }
             
-            // Show progress modal
+            // Show progress modal with animation
             progressModal.classList.remove('hidden');
+            progressModal.classList.add('progress-overlay-visible');
+            requestAnimationFrame(() => {
+                progressModal.classList.add('progress-overlay-show');
+            });
             progressBar.style.width = '10%';
             progressText.textContent = 'Skipping security checks...';
             
@@ -314,11 +318,13 @@ include __DIR__ . '/../components/header.php';
                 
                 const data = await res.json();
                 
-                // Close progress modal
+                // Close progress modal with exit animation
+                progressModal.classList.remove('progress-overlay-show');
                 setTimeout(() => {
+                    progressModal.classList.remove('progress-overlay-visible');
                     progressModal.classList.add('hidden');
                     progressBar.style.width = '0%';
-                }, 300);
+                }, 280);
                 
                 if (data.success) {
                     showToast('File uploaded (no security checks applied)', 'warning');
@@ -328,11 +334,12 @@ include __DIR__ . '/../components/header.php';
                         const path = String(data.storedAs).replace(/^\//, '');
                         const fullUrl = origin + '/' + path;
                         
-                        // Update URL display
+                        // Update URL display with animation
                         if (linkWrapper && linkElement) {
                             linkElement.textContent = fullUrl;
                             linkElement.href = fullUrl;
                             linkWrapper.classList.remove('hidden');
+                            requestAnimationFrame(() => linkWrapper.classList.add('link-wrapper-visible'));
                         }
                         
                         // Show warning about vulnerable URL
@@ -345,17 +352,209 @@ include __DIR__ . '/../components/header.php';
                     showToast(data.error || 'Upload failed.', 'error');
                 }
             } catch (err) {
-                progressModal.classList.add('hidden');
-                progressBar.style.width = '0%';
+                progressModal.classList.remove('progress-overlay-show');
+                setTimeout(() => {
+                    progressModal.classList.remove('progress-overlay-visible');
+                    progressModal.classList.add('hidden');
+                    progressBar.style.width = '0%';
+                }, 280);
                 showToast('Network error. Please try again.', 'error');
                 console.error('Upload error:', err);
             }
         });
     })();
     
-    // Add CSS animation for toast
+    // Add CSS animations
     const style = document.createElement('style');
     style.textContent = `
+        .glass-card {
+            background: rgba(38, 38, 38, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        /* Page & card entrance */
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-card-in {
+            animation: cardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        /* Header icon subtle pulse */
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(190, 18, 60, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 0 0 6px rgba(190, 18, 60, 0); }
+        }
+        .vuln-header-icon {
+            animation: iconPulse 2.5s ease-in-out infinite;
+        }
+        
+        /* Risk badges pulse */
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.25); }
+            50% { opacity: 0.9; box-shadow: 0 0 0 4px rgba(244, 63, 94, 0); }
+        }
+        .badge-pulse {
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+        .badge-pulse-delay {
+            animation-delay: 0.5s;
+        }
+        
+        /* Drop zone & icon */
+        .drop-zone {
+            transition: border-color 0.3s, background 0.3s, transform 0.25s ease;
+        }
+        .drop-zone:hover {
+            transform: translateY(-1px);
+        }
+        @keyframes dropZoneIcon {
+            0%, 100% { transform: translateY(0); opacity: 0.9; }
+            50% { transform: translateY(-3px); opacity: 1; }
+        }
+        .drop-zone:hover .drop-zone-icon {
+            animation: dropZoneIcon 1.2s ease-in-out infinite;
+        }
+        
+        /* Choose file button */
+        .btn-choose {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-choose:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(190, 18, 60, 0.25);
+        }
+        .btn-choose:hover .btn-choose-icon {
+            animation: uploadIconWiggle 0.5s ease;
+        }
+        @keyframes uploadIconWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-8deg); }
+            75% { transform: rotate(8deg); }
+        }
+        
+        /* Selected file in/out */
+        .selected-file-wrap {
+            overflow: hidden;
+            transition: opacity 0.28s ease, max-height 0.32s ease, margin 0.28s ease;
+            max-height: 0;
+            opacity: 0;
+        }
+        .selected-file-wrap.selected-file-visible {
+            max-height: 80px;
+            opacity: 1;
+        }
+        .selected-file-wrap:not(.selected-file-visible) .selected-file-inner {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        .selected-file-inner {
+            transition: opacity 0.25s ease 0.06s, transform 0.25s ease 0.06s;
+        }
+        .selected-file-wrap.selected-file-visible .selected-file-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Vulnerability indicator cards - staggered appear */
+        .vuln-indicator {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: vulnIndicatorIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+        }
+        .vuln-indicator-2 { animation-delay: 0.06s; }
+        .vuln-indicator-3 { animation-delay: 0.12s; }
+        .vuln-indicator-4 { animation-delay: 0.18s; }
+        .vuln-indicator:hover {
+            transform: translateY(-2px);
+            border-color: rgba(244, 63, 94, 0.25);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes vulnIndicatorIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Upload button */
+        .btn-upload:hover .btn-upload-icon {
+            animation: radiationSpin 1.2s linear infinite;
+        }
+        @keyframes radiationSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Link wrapper (after upload) */
+        .link-wrapper {
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .link-wrapper.link-wrapper-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .link-wrapper-inner {
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .link-wrapper-inner:hover {
+            border-color: rgba(244, 63, 94, 0.4);
+            box-shadow: 0 0 0 1px rgba(244, 63, 94, 0.15);
+        }
+        
+        /* Progress overlay */
+        .progress-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s;
+        }
+        .progress-overlay.progress-overlay-visible {
+            visibility: visible;
+        }
+        .progress-overlay.progress-overlay-show {
+            opacity: 1;
+        }
+        .progress-overlay.progress-overlay-show .progress-modal {
+            animation: progressModalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .progress-overlay:not(.progress-overlay-show) .progress-modal {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.22s ease, opacity 0.22s ease;
+        }
+        @keyframes progressModalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .progress-icon-wrap {
+            animation: progressIconPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes progressIconPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.85; }
+        }
+        .progress-bar-fill {
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        /* Toast */
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -366,24 +565,22 @@ include __DIR__ . '/../components/header.php';
                 transform: translateX(0);
             }
         }
-        
         @keyframes pulseWarning {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
-        
         .animate-slide-in {
-            animation: slideIn 0.3s ease-out;
+            animation: slideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        
         .animate-pulse-warning {
             animation: pulseWarning 2s infinite;
         }
-        
-        .glass-card {
-            background: rgba(38, 38, 38, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .toast-item {
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .toast-item.toast-exit {
+            opacity: 0;
+            transform: translateX(100%);
         }
     `;
     document.head.appendChild(style);

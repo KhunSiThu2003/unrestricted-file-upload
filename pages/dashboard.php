@@ -61,8 +61,8 @@ include __DIR__ . '/../components/header.php';
     
     @keyframes virusSpread {
         0% { transform: scale(0); opacity: 0; }
-        50% { transform: scale(1.5); opacity: 0.8; }
-        100% { transform: scale(2); opacity: 0; }
+        50% { transform: scale(1.1); opacity: 0.35; }
+        100% { transform: scale(1.2); opacity: 0; }
     }
     
     @keyframes shieldPulse {
@@ -89,9 +89,9 @@ include __DIR__ . '/../components/header.php';
     
     @keyframes serverDamage {
         0% { filter: hue-rotate(0deg) brightness(1); }
-        25% { filter: hue-rotate(30deg) brightness(1.3); }
-        50% { filter: hue-rotate(-30deg) brightness(0.8); }
-        75% { filter: hue-rotate(20deg) brightness(1.2); }
+        25% { filter: hue-rotate(8deg) brightness(1.08); }
+        50% { filter: hue-rotate(-5deg) brightness(0.95); }
+        75% { filter: hue-rotate(5deg) brightness(1.05); }
         100% { filter: hue-rotate(0deg) brightness(1); }
     }
     
@@ -126,7 +126,7 @@ include __DIR__ . '/../components/header.php';
     }
     
     .virus-effect {
-        animation: virusSpread 1s ease-out forwards;
+        animation: virusSpread 0.8s ease-out forwards;
     }
     
     .shield-glow {
@@ -146,7 +146,7 @@ include __DIR__ . '/../components/header.php';
     }
     
     .server-damaged {
-        animation: serverDamage 0.5s ease-in-out 3;
+        animation: serverDamage 0.4s ease-in-out 1;
     }
     
     .scan-effect::after {
@@ -219,8 +219,8 @@ include __DIR__ . '/../components/header.php';
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         <!-- UNSAFE UPLOAD CARD -->
         <div class="relative group">
-            <div class="absolute -inset-1 bg-rose-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-            <div class="glass-panel relative rounded-2xl p-6">
+            <div class="absolute -inset-1 bg-rose-600 rounded blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+            <div class="glass-panel relative rounded p-6">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center gap-3">
                         <h2 class="text-2xl font-bold text-rose-400">Vulnerable Upload</h2>
@@ -231,12 +231,12 @@ include __DIR__ . '/../components/header.php';
                 </div>
                 
                 <!-- 3D Scene - Unsafe -->
-                <div id="unsafe-scene" class="scene-3d relative h-72  rounded-xl overflow-hidden bg-neutral-900">
+                <div id="unsafe-scene" class="scene-3d relative h-72  rounded overflow-hidden bg-neutral-900">
                     <!-- Floor -->
-                    <div class="floor-3d absolute bottom-0 left-0 right-0 h-32 rounded-lg" style="background: rgba(244, 63, 94, 0.08);"></div>
+                    <div class="floor-3d absolute bottom-0 left-0 right-0 h-32 rounded" style="background: rgba(244, 63, 94, 0.08);"></div>
                     
                     <!-- Upload Form -->
-                    <div id="unsafe-form" class="upload-form-3d absolute left-4 top-1/2 -translate-y-1/2 w-24 h-32 rounded-lg bg-rose-900/30 border-2 border-rose-500/30 flex flex-col items-center justify-center gap-2 shadow-xl">
+                    <div id="unsafe-form" class="upload-form-3d absolute left-4 top-1/2 -translate-y-1/2 w-24 h-32 rounded bg-rose-900/30 border-2 border-rose-500/30 flex flex-col items-center justify-center gap-2 shadow-xl">
                         <div class="text-3xl text-rose-300"><i class="fas fa-cloud-upload-alt"></i></div>
                         <div class="text-xs text-rose-300">Upload</div>
                         <div class="w-16 h-1 bg-rose-500/50 rounded"></div>
@@ -248,7 +248,7 @@ include __DIR__ . '/../components/header.php';
                     </div>
                     
                     <!-- Server -->
-                    <div id="unsafe-server" class="server-3d absolute right-4 top-1/2 -translate-y-1/2 w-28 h-40 rounded-lg bg-rose-900/20 border-2 border-rose-500/30 flex flex-col items-center justify-center shadow-xl transition-all duration-300">
+                    <div id="unsafe-server" class="server-3d absolute right-4 top-1/2 -translate-y-1/2 w-28 h-40 rounded bg-rose-900/20 border-2 border-rose-500/30 flex flex-col items-center justify-center shadow-xl transition-all duration-300">
                         <div class="text-4xl mb-2 text-rose-300"><i class="fas fa-server"></i></div>
                         <div class="text-xs text-rose-300 font-medium">Web Server</div>
                         <div class="flex gap-1 mt-2">
@@ -268,7 +268,7 @@ include __DIR__ . '/../components/header.php';
                 <!-- Card action -->
                 <div class="mt-4 pt-4 border-t border-white/5">
                     <a href="/pages/vulnerable_upload.php" 
-                       class="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg text-rose-300 hover:text-rose-200 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 transition-all duration-200 font-medium">
+                       class="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded text-rose-300 hover:text-rose-200 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 transition-all duration-200 font-medium">
                         <i class="fas fa-bug"></i>
                         <span>Try Vulnerable Upload</span>
                     </a>
@@ -278,8 +278,8 @@ include __DIR__ . '/../components/header.php';
         
         <!-- SECURE UPLOAD CARD -->
         <div class="relative group">
-            <div class="absolute -inset-1 bg-emerald-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-            <div class="glass-panel relative rounded-2xl p-6">
+            <div class="absolute -inset-1 bg-emerald-600 rounded blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+            <div class="glass-panel relative rounded p-6">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center gap-3">
                         <h2 class="text-2xl font-bold text-emerald-400">Secure Upload</h2>
@@ -290,12 +290,12 @@ include __DIR__ . '/../components/header.php';
                 </div>
                 
                 <!-- 3D Scene - Secure -->
-                <div id="secure-scene" class="scene-3d relative h-72  rounded-xl overflow-hidden bg-neutral-900">
+                <div id="secure-scene" class="scene-3d relative h-72  rounded overflow-hidden bg-neutral-900">
                     <!-- Floor -->
-                    <div class="floor-3d absolute bottom-0 left-0 right-0 h-32 rounded-lg" style="background: rgba(52, 211, 153, 0.12);"></div>
+                    <div class="floor-3d absolute bottom-0 left-0 right-0 h-32 rounded" style="background: rgba(52, 211, 153, 0.12);"></div>
                     
                     <!-- Upload Form -->
-                    <div class="upload-form-3d absolute left-4 top-1/2 -translate-y-1/2 w-24 h-32 rounded-lg bg-emerald-900/30 border-2 border-emerald-500/30 flex flex-col items-center justify-center gap-2 shadow-xl">
+                    <div class="upload-form-3d absolute left-4 top-1/2 -translate-y-1/2 w-24 h-32 rounded bg-emerald-900/30 border-2 border-emerald-500/30 flex flex-col items-center justify-center gap-2 shadow-xl">
                         <div class="text-3xl text-emerald-300"><i class="fas fa-cloud-upload-alt"></i></div>
                         <div class="text-xs text-emerald-300">Upload</div>
                         <div class="w-16 h-1 bg-emerald-500/50 rounded"></div>
@@ -307,7 +307,7 @@ include __DIR__ . '/../components/header.php';
                     </div>
                     
                     <!-- Security Shield -->
-                    <div id="security-shield" class="shield-glow absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-16 h-20 rounded-lg bg-emerald-500/30 border-2 border-emerald-400 flex items-center justify-center transition-all duration-300 relative overflow-hidden">
+                    <div id="security-shield" class="shield-glow absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-16 h-20 rounded bg-emerald-500/30 border-2 border-emerald-400 flex items-center justify-center transition-all duration-300 relative overflow-hidden">
                         <div class="text-2xl text-emerald-400"><i class="fas fa-shield-alt"></i></div>
                         <div class="absolute inset-0 scan-effect opacity-50"></div>
                     </div>
@@ -320,7 +320,7 @@ include __DIR__ . '/../components/header.php';
                     </div>
                     
                     <!-- Server -->
-                    <div id="secure-server" class="server-3d absolute right-4 top-1/2 -translate-y-1/2 w-28 h-40 rounded-lg bg-emerald-900/20 border-2 border-emerald-500/30 flex flex-col items-center justify-center shadow-xl">
+                    <div id="secure-server" class="server-3d absolute right-4 top-1/2 -translate-y-1/2 w-28 h-40 rounded bg-emerald-900/20 border-2 border-emerald-500/30 flex flex-col items-center justify-center shadow-xl">
                         <div class="text-4xl mb-2 text-emerald-300"><i class="fas fa-server"></i></div>
                         <div class="text-xs text-emerald-300 font-medium">Secure Server</div>
                         <div class="flex gap-1 mt-2">
@@ -339,7 +339,7 @@ include __DIR__ . '/../components/header.php';
                 <!-- Card action -->
                 <div class="mt-4 pt-4 border-t border-white/5">
                     <a href="/pages/secure_upload.php" 
-                       class="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg text-emerald-300 hover:text-emerald-200 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 transition-all duration-200 font-medium">
+                       class="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded text-emerald-300 hover:text-emerald-200 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 transition-all duration-200 font-medium">
                         <i class="fas fa-lock"></i>
                         <span>Try Secure Upload</span>
                     </a>
@@ -372,7 +372,7 @@ include __DIR__ . '/../components/header.php';
     // Create file element
     function createFileElement(file, isSecure = false) {
         const el = document.createElement('div');
-        el.className = `file-item flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 file-floating ${
+        el.className = `file-item flex items-center gap-2 px-3 py-2 rounded transition-all duration-300 file-floating ${
             file.type === 'danger' ? 'bg-rose-900/80 border border-rose-500/50' : 'bg-neutral-800/80 border border-neutral-500/50'
         }`;
         el.innerHTML = `
@@ -387,14 +387,14 @@ include __DIR__ . '/../components/header.php';
         return el;
     }
 
-    // Create virus effect
+    // Create virus effect (subtle)
     function createVirusEffect(container) {
         const virus = document.createElement('div');
-        virus.className = 'virus-effect absolute inset-0 rounded-lg';
-        virus.style.background = 'rgba(244, 63, 94, 0.4)';
+        virus.className = 'virus-effect absolute inset-0 rounded';
+        virus.style.background = 'rgba(244, 63, 94, 0.22)';
         container.appendChild(virus);
         
-        const t = setTimeout(() => virus.remove(), 1000);
+        const t = setTimeout(() => virus.remove(), 800);
         animationTimeouts.push(t);
     }
 
@@ -509,11 +509,6 @@ include __DIR__ . '/../components/header.php';
                 if (demoStatus) demoStatus.textContent = `⚠️ ${file.name} compromised the server!`;
                 
                 createVirusEffect(virusContainer);
-                
-                // Add multiple virus effects
-                for (let j = 0; j < 2; j++) {
-                    setTimeout(() => createVirusEffect(virusContainer), j * 300);
-                }
             } else {
                 status.innerHTML = `<i class="fas fa-check mr-1"></i>${file.name} uploaded`;
                 status.className = 'absolute bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-medium text-emerald-200';
@@ -644,14 +639,14 @@ include __DIR__ . '/../components/header.php';
         if (autoPlay) {
             if (btn) {
                 btn.innerHTML = '<span class="text-xl mr-2"><i class="fas fa-pause"></i></span><span class="font-medium">Disable Auto-Play</span>';
-                btn.className = 'control-btn px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all duration-300 shadow-lg flex items-center gap-3';
+                btn.className = 'control-btn px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded transition-all duration-300 shadow-lg flex items-center gap-3';
             }
             if (demoStatus) demoStatus.textContent = 'Auto-play enabled - demo will loop continuously';
             if (!isRunning) startDemo();
         } else {
             if (btn) {
                 btn.innerHTML = '<span class="text-xl mr-2"><i class="fas fa-sync-alt"></i></span><span class="font-medium">Enable Auto-Play</span>';
-                btn.className = 'control-btn px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all duration-300 shadow-lg flex items-center gap-3';
+                btn.className = 'control-btn px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded transition-all duration-300 shadow-lg flex items-center gap-3';
             }
             if (demoStatus) demoStatus.textContent = 'Auto-play disabled - manual control only';
         }
@@ -681,7 +676,7 @@ include __DIR__ . '/../components/header.php';
             const autoplayBtn = document.getElementById('autoplay-btn');
             if (autoplayBtn) {
                 autoplayBtn.innerHTML = '<span class="text-xl mr-2"><i class="fas fa-pause"></i></span><span class="font-medium">Disable Auto-Play</span>';
-                autoplayBtn.className = 'control-btn px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all duration-300 shadow-lg flex items-center gap-3';
+                autoplayBtn.className = 'control-btn px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded transition-all duration-300 shadow-lg flex items-center gap-3';
             }
         }, 1000);
         animationTimeouts.push(t);

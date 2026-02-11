@@ -72,60 +72,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 include __DIR__ . '/../components/header.php';
 ?>
-<main class="min-h-screen flex items-center justify-center px-4 py-10 bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-950">
-    <div class="w-full max-w-md mx-auto">
+<section class="w-full mx-auto px-4 py-8 auth-fade-in">
+
+    <div class="max-w-md mx-auto">
         <?php include __DIR__ . '/../components/login.php'; ?>
         <?php include __DIR__ . '/../components/register.php'; ?>
-        
-        <!-- Features Preview -->
-        <div class="mt-8 glass-card rounded-2xl p-6 border border-white/10 bg-gradient-to-b from-neutral-900/50 to-neutral-900/30">
-            <h3 class="text-lg font-bold text-white mb-4 text-center">Explore Security Features</h3>
-            <div class="grid grid-cols-2 gap-3">
-                <div class="text-center p-3 rounded-xl bg-gradient-to-br from-rose-900/20 to-rose-900/10 border border-rose-500/20">
-                    <i class="fas fa-bug text-rose-400 text-xl mb-2"></i>
-                    <p class="text-xs font-medium text-white">Vulnerable Upload</p>
-                    <p class="text-xs text-gray-400 mt-1">See insecure implementation</p>
-                </div>
-                <div class="text-center p-3 rounded-xl bg-gradient-to-br from-emerald-900/20 to-emerald-900/10 border border-emerald-500/20">
-                    <i class="fas fa-shield-alt text-emerald-400 text-xl mb-2"></i>
-                    <p class="text-xs font-medium text-white">Secure Upload</p>
-                    <p class="text-xs text-gray-400 mt-1">Learn best practices</p>
-                </div>
-            </div>
-        </div>
     </div>
-</main>
+</section>
 
 <script>
 (function () {
-    // Tab switching functionality
-    const tabs = document.querySelectorAll('.tab-button');
+    const tabLinks = document.querySelectorAll('.tab-link');
     const loginPanel = document.getElementById('panel-login');
     const registerPanel = document.getElementById('panel-register');
 
     function switchTab(tabName) {
-        // Update URL without page reload
         const url = new URL(window.location);
         url.searchParams.set('tab', tabName);
         window.history.replaceState({}, '', url);
 
-        // Update tab buttons
-        tabs.forEach(btn => {
-            if (btn.dataset.tab === tabName) {
-                if (tabName === 'login') {
-                    btn.classList.remove('text-gray-500', 'hover:text-gray-300', 'hover:bg-white/5');
-                    btn.classList.add('bg-gradient-to-r', 'from-purple-600', 'to-indigo-700', 'text-white', 'shadow-lg');
-                } else {
-                    btn.classList.remove('text-gray-500', 'hover:text-gray-300', 'hover:bg-white/5');
-                    btn.classList.add('bg-gradient-to-r', 'from-emerald-600', 'to-emerald-700', 'text-white', 'shadow-lg');
-                }
-            } else {
-                btn.classList.remove('bg-gradient-to-r', 'from-purple-600', 'to-indigo-700', 'from-emerald-600', 'to-emerald-700', 'text-white', 'shadow-lg');
-                btn.classList.add('text-gray-500', 'hover:text-gray-300', 'hover:bg-white/5');
-            }
-        });
-
-        // Show/hide panels
         if (tabName === 'login') {
             loginPanel.classList.remove('hidden');
             registerPanel.classList.add('hidden');
@@ -137,20 +102,19 @@ include __DIR__ . '/../components/header.php';
         }
     }
 
-    tabs.forEach(btn => {
-        btn.addEventListener('click', () => {
-            switchTab(btn.dataset.tab);
+    tabLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab(link.dataset.tab);
         });
     });
 
-    // Check URL for tab parameter
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
     if (tabParam && (tabParam === 'login' || tabParam === 'register')) {
         switchTab(tabParam);
     }
 
-    // Auto-focus on first input
     document.addEventListener('DOMContentLoaded', () => {
         if (<?php echo $activeTab === 'login' ? 'true' : 'false'; ?>) {
             document.getElementById('login_email')?.focus();
@@ -161,8 +125,22 @@ include __DIR__ . '/../components/header.php';
 })();
 </script>
 
-<!-- Password Strength Indicator (optional enhancement) -->
 <style>
+@keyframes authFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-fade-in {
+    animation: authFadeIn 0.5s ease-out forwards;
+}
+
 .password-strength {
     height: 4px;
     border-radius: 2px;
@@ -172,19 +150,19 @@ include __DIR__ . '/../components/header.php';
 
 .strength-weak { 
     width: 25%; 
-    background: linear-gradient(90deg, #ef4444, #f87171);
+    background: #ef4444;
 }
 .strength-fair { 
     width: 50%; 
-    background: linear-gradient(90deg, #f97316, #fb923c);
+    background: #f97316;
 }
 .strength-good { 
     width: 75%; 
-    background: linear-gradient(90deg, #eab308, #facc15);
+    background: #eab308;
 }
 .strength-strong { 
     width: 100%; 
-    background: linear-gradient(90deg, #22c55e, #4ade80);
+    background: #22c55e;
 }
 
 .glass-card {
@@ -192,6 +170,24 @@ include __DIR__ . '/../components/header.php';
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+.info-badge {
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.warning-badge {
+    background: rgba(244, 63, 94, 0.2);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.success-badge {
+    background: rgba(52, 211, 153, 0.2);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+}
 </style>
 
-<?php include __DIR__ . '/../components/footer.php'; ?>
+</main>
+
+</body>
+</html>
