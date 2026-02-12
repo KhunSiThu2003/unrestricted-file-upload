@@ -37,15 +37,12 @@
                class="nav-link px-4 py-3 rounded text-rose-300 hover:text-rose-200 hover:bg-rose-500/10 flex items-center space-x-3 w-full relative">
                 <i class="fas fa-bug text-sm w-5"></i>
                 <span>Vulnerable Upload</span>
-                <span class="badge badge-danger ml-auto">Danger</span>
-                <div class="notification-badge">!</div>
             </a>
             
             <a href="/pages/secure_upload.php" 
                class="nav-link px-4 py-3 rounded text-emerald-300 hover:text-emerald-200 hover:bg-emerald-500/10 flex items-center space-x-3 w-full">
                 <i class="fas fa-lock text-sm w-5"></i>
                 <span>Secure Upload</span>
-                <span class="badge badge-safe ml-auto">Safe</span>
             </a>
         </div>
         
