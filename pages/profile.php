@@ -22,17 +22,14 @@ if (!empty($user['profile_image'])) {
     $profilePicUrl = '../uploads/' . htmlspecialchars($user['profile_image']);
 }
 
-// Format creation date if available
-$createdAt = isset($user['created_at']) ? date('F j, Y', strtotime($user['created_at'])) : 'Unknown';
-
 include __DIR__ . '/../components/header.php';
 ?>
 <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
     <!-- Page Header -->
     <div class="mb-8 sm:mb-12">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded bg-indigo-600 flex items-center justify-center">
+                <div class="w-12 h-12 rounded bg-sky-600 flex items-center justify-center">
                     <i class="fas fa-user-circle text-white text-xl"></i>
                 </div>
                 <div>
@@ -50,16 +47,16 @@ include __DIR__ . '/../components/header.php';
         
     </div>
 
-    <div class="w-full glass-card rounded overflow-hidden border border-indigo-500/20 bg-neutral-900/40">
+    <div class="w-full glass-card rounded overflow-hidden border border-sky-500/20 bg-neutral-900/40">
                 <!-- Card Header -->
-                <div class="px-6 py-4 sm:px-8 sm:py-6 border-b border-indigo-500/10 bg-indigo-900/10">
+                <div class="px-6 py-4 sm:px-8 sm:py-6 border-b border-sky-500/10 bg-sky-900/10">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded bg-indigo-600 flex items-center justify-center">
+                        <div class="w-10 h-10 rounded bg-sky-600 flex items-center justify-center">
                             <i class="fas fa-id-card text-white"></i>
                         </div>
                         <div>
                             <h2 class="text-xl font-bold text-white">Profile Information</h2>
-                            <p class="text-xs text-indigo-400/70">Personal details and account data</p>
+                            <p class="text-xs text-sky-400/70">Personal details and account data</p>
                         </div>
                     </div>
                 </div>
@@ -74,9 +71,9 @@ include __DIR__ . '/../components/header.php';
                                     <?php if ($profilePicUrl): ?>
                                         <img src="<?php echo $profilePicUrl . '?cache=' . time(); ?>" 
                                              alt="Profile Picture"
-                                             class="w-full aspect-square rounded object-cover border-2 border-indigo-500/30 shadow-lg group-hover:border-indigo-400/50 transition-all duration-300">
+                                             class="w-full aspect-square rounded object-cover border-2 border-sky-500/30 shadow-lg group-hover:border-sky-400/50 transition-all duration-300">
                                     <?php else: ?>
-                                        <div class="w-full aspect-square rounded bg-neutral-800 border-2 border-indigo-500/30 flex items-center justify-center shadow-lg group-hover:border-indigo-400/50 transition-all duration-300">
+                                        <div class="w-full aspect-square rounded bg-neutral-800 border-2 border-sky-500/30 flex items-center justify-center shadow-lg group-hover:border-sky-400/50 transition-all duration-300">
                                             <i class="fas fa-user-circle text-6xl text-gray-400"></i>
                                         </div>
                                     <?php endif; ?>
@@ -85,7 +82,7 @@ include __DIR__ . '/../components/header.php';
                                 
                                 <div class="mt-4 text-center">
                                     <a href="secure_upload.php"
-                                       class="inline-flex items-center gap-2 px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-all duration-300 border border-indigo-500/30">
+                                       class="inline-flex items-center gap-2 px-4 py-2 rounded bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium transition-all duration-300 border border-sky-500/30">
                                         <i class="fas fa-camera"></i>
                                         <span>Change Picture</span>
                                     </a>
@@ -101,7 +98,7 @@ include __DIR__ . '/../components/header.php';
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div class="space-y-1">
                                             <div class="flex items-center gap-2 mb-2">
-                                                <i class="fas fa-user text-indigo-400 text-sm"></i>
+                                                <i class="fas fa-user text-sky-400 text-sm"></i>
                                                 <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Full Name</span>
                                             </div>
                                             <p class="text-lg font-semibold text-white"><?php echo htmlspecialchars($user['name']); ?></p>
@@ -109,31 +106,13 @@ include __DIR__ . '/../components/header.php';
                                         
                                         <div class="space-y-1">
                                             <div class="flex items-center gap-2 mb-2">
-                                                <i class="fas fa-envelope text-indigo-400 text-sm"></i>
+                                                <i class="fas fa-envelope text-sky-400 text-sm"></i>
                                                 <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Email Address</span>
                                             </div>
                                             <p class="text-lg font-semibold text-white break-all"><?php echo htmlspecialchars($user['email']); ?></p>
                                         </div>
                                         
-                                        <div class="space-y-1">
-                                            <div class="flex items-center gap-2 mb-2">
-                                                <i class="fas fa-calendar-alt text-indigo-400 text-sm"></i>
-                                                <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Member Since</span>
-                                            </div>
-                                            <p class="text-lg font-semibold text-white"><?php echo $createdAt; ?></p>
-                                        </div>
-                                        
-                                        <div class="space-y-1">
-                                            <div class="flex items-center gap-2 mb-2">
-                                                <i class="fas fa-shield-alt text-indigo-400 text-sm"></i>
-                                                <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Account Type</span>
-                                            </div>
-                                            <p class="text-lg font-semibold text-white">
-                                                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-indigo-500/15 text-indigo-300 text-xs font-medium">
-                                                    Security Demo User
-                                                </span>
-                                            </p>
-                                        </div>
+                                        <!-- Removed "Member Since" and "Account Type" per requirements -->
                                     </div>
                                 </div>
 

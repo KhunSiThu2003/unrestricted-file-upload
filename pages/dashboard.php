@@ -210,10 +210,10 @@ include __DIR__ . '/../components/header.php';
 <section class="w-full mx-auto px-4 py-8">
     <!-- Header -->
     <div class="mb-10 text-center">
-        <h1 class="text-3xl font-bold text-indigo-400 mb-2">
-            File Upload Security Lab
+        <h1 class="text-3xl font-bold text-sky-400 mb-2">
+            Unrestricted File Upload Lab
         </h1>
-        <p class="text-gray-400">Compare vulnerable vs secure file upload behavior in real time.</p>
+        <p class="text-gray-400">Explore how unrestricted vs hardened file uploads behave in real time.</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">

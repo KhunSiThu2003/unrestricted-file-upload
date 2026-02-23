@@ -1,4 +1,4 @@
-## PHP File Upload Security Demo
+## Unrestricted File Upload Lab
 
 This is a small educational web application that demonstrates secure authentication and both **vulnerable** and **secure** file upload patterns.
 
