@@ -75,7 +75,7 @@ include __DIR__ . '/../components/header.php';
                         </div>
 
                         <!-- Vulnerability Indicators -->
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 vuln-indicators">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 vuln-indicators">
                             <div class="vuln-indicator bg-neutral-900/40 rounded p-3 text-center border border-rose-500/10">
                                 <div class="w-8 h-8 mx-auto mb-2 rounded-full bg-rose-500/10 flex items-center justify-center">
                                     <i class="fas fa-times-circle text-rose-400 text-sm"></i>

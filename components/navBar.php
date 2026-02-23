@@ -67,9 +67,9 @@
                     </div>
                     <div class="hidden xs:block">
                         <h1 class="text-sm sm:text-lg font-bold text-indigo-400 responsive-logo">
-                            FileSec Lab
+                            Unrestricted File Upload Lab
                         </h1>
-                        <p class="text-xs text-gray-400 mobile-hide">Security Demonstration</p>
+                        <p class="text-xs text-gray-400 mobile-hide">Insecure vs secure upload training</p>
                     </div>
                 </a>
             </div>

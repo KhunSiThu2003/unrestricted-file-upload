@@ -2,19 +2,19 @@
 ?>
         <!-- Register panel -->
         <div id="panel-register" class="<?php echo $activeTab === 'register' ? '' : 'hidden'; ?> space-y-5">
-            <h2 class="text-xl font-bold text-indigo-300 mb-6">Create account</h2>
+            <h2 class="text-xl font-bold text-sky-300 mb-6">Create account</h2>
             <form method="post" class="space-y-5">
                 <input type="hidden" name="action" value="register">
 
                 <div class="space-y-1">
                     <label class="block text-sm font-medium text-gray-300" for="name">
                         <div class="flex items-center gap-2 mb-1">
-                            <i class="fas fa-user text-indigo-400 text-sm"></i>
+                            <i class="fas fa-user text-sky-400 text-sm"></i>
                             <span>Full Name</span>
                         </div>
                     </label>
                     <input id="name" name="name" type="text"
-                           class="w-full px-4 py-3 rounded border border-white/10 bg-neutral-800/80 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                           class="w-full px-4 py-3 rounded border border-white/10 bg-neutral-800/80 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                            placeholder="John Doe"
                            required>
                 </div>
@@ -22,12 +22,12 @@
                 <div class="space-y-1">
                     <label class="block text-sm font-medium text-gray-300" for="email">
                         <div class="flex items-center gap-2 mb-1">
-                            <i class="fas fa-envelope text-indigo-400 text-sm"></i>
+                            <i class="fas fa-envelope text-sky-400 text-sm"></i>
                             <span>Email Address</span>
                         </div>
                     </label>
                     <input id="email" name="email" type="email"
-                           class="w-full px-4 py-3 rounded border border-white/10 bg-neutral-800/80 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                           class="w-full px-4 py-3 rounded border border-white/10 bg-neutral-800/80 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                            placeholder="you@example.com"
                            required>
                 </div>
@@ -36,13 +36,13 @@
                     <div class="space-y-1">
                         <label class="block text-sm font-medium text-gray-300" for="password">
                             <div class="flex items-center gap-2 mb-1">
-                                <i class="fas fa-lock text-indigo-400 text-sm"></i>
+                                <i class="fas fa-lock text-sky-400 text-sm"></i>
                                 <span>Password</span>
                             </div>
                         </label>
                         <div class="relative">
                             <input id="password" name="password" type="password"
-                                   class="w-full px-4 py-3 rounded border border-white/10 bg-neutral-800/80 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all pr-10"
+                                   class="w-full px-4 py-3 rounded border border-white/10 bg-neutral-800/80 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all pr-10"
                                    placeholder="Create a password"
                                    required>
                             <button type="button"
@@ -56,13 +56,13 @@
                     <div class="space-y-1">
                         <label class="block text-sm font-medium text-gray-300" for="confirm_password">
                             <div class="flex items-center gap-2 mb-1">
-                                <i class="fas fa-lock text-indigo-400 text-sm"></i>
+                                <i class="fas fa-lock text-sky-400 text-sm"></i>
                                 <span>Confirm Password</span>
                             </div>
                         </label>
                         <div class="relative">
                             <input id="confirm_password" name="confirm_password" type="password"
-                                   class="w-full px-4 py-3 rounded border border-white/10 bg-neutral-800/80 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all pr-10"
+                                   class="w-full px-4 py-3 rounded border border-white/10 bg-neutral-800/80 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all pr-10"
                                    placeholder="Confirm password"
                                    required>
                             <button type="button"
@@ -76,13 +76,13 @@
 
                 <div class="pt-2">
                     <button type="submit"
-                            class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded text-indigo-300 hover:text-indigo-200 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 transition-all duration-200 font-medium">
+                            class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded text-sky-300 hover:text-sky-200 bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 transition-all duration-200 font-medium">
                         <i class="fas fa-user-plus"></i>
                         <span>Create Account</span>
                     </button>
                 </div>
                 <p class="text-center text-sm text-gray-400 pt-2">
-                    Already have an account? <a href="#" class="tab-link text-indigo-400 hover:text-indigo-300 underline underline-offset-2" data-tab="login">Sign in</a>
+                    Already have an account? <a href="#" class="tab-link text-sky-400 hover:text-sky-300 underline underline-offset-2" data-tab="login">Sign in</a>
                 </p>
             </form>
 
