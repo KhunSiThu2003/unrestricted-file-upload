@@ -1,8 +1,5 @@
 <?php
 require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../auth.php';
-
-require_login();
 
 include __DIR__ . '/../components/header.php';
 ?>
@@ -41,6 +38,15 @@ include __DIR__ . '/../components/header.php';
                             This endpoint accepts <span class="font-bold text-rose-300">any file type</span> without validation.
                             Files are stored with original names in a web-accessible directory.
                         </p>
+                    </div>
+
+                    <!-- Back button -->
+                    <div class="mb-4">
+                        <a href="/pages/dashboard.php"
+                           class="inline-flex items-center gap-2 px-3 py-2 rounded bg-neutral-800 hover:bg-neutral-700 text-gray-200 text-sm border border-white/10 transition-colors">
+                            <i class="fas fa-arrow-left text-xs"></i>
+                            <span>Back to Dashboard</span>
+                        </a>
                     </div>
 
                     <form id="vuln-upload-form" class="space-y-6">
@@ -327,7 +333,8 @@ include __DIR__ . '/../components/header.php';
                 }, 280);
                 
                 if (data.success) {
-                    showToast('File uploaded (no security checks applied)', 'warning');
+                    // Show a success toast for the upload itself
+                    showToast('File uploaded successfully.', 'success');
                     
                     if (data.storedAs) {
                         const origin = window.location.origin.replace(/\/$/, '');
@@ -342,8 +349,8 @@ include __DIR__ . '/../components/header.php';
                             requestAnimationFrame(() => linkWrapper.classList.add('link-wrapper-visible'));
                         }
                         
-                        // Show warning about vulnerable URL
-                        showToast('File is directly accessible at: ' + fullUrl, 'warning');
+                        // Show info about vulnerable, directly accessible URL
+                        showToast('File is directly accessible at: ' + fullUrl, 'info');
                     }
                     
                     // Clear file input
@@ -486,13 +493,8 @@ include __DIR__ . '/../components/header.php';
             }
         }
         
-        /* Upload button */
-        .btn-upload:hover .btn-upload-icon {
-            animation: radiationSpin 1.2s linear infinite;
-        }
-        @keyframes radiationSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* Upload button (no icon animation) */
+        .btn-upload {
         }
         
         /* Link wrapper (after upload) */

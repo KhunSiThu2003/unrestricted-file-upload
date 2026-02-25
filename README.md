@@ -1,29 +1,29 @@
 ## Unrestricted File Upload Lab
 
-This is a small educational web application that demonstrates secure authentication and both **vulnerable** and **secure** file upload patterns.
+This is a small educational web application that focuses on **vulnerable** and **secure** file upload patterns.  
+Authentication, profile pages, and navigation have been removed so that the lab is simple and centered only on file upload behavior.
 
 ### Stack
 
 - **Backend**: PHP (no framework)
-- **Database**: MySQL
+- **Database**: MySQL (used only for basic setup via `config.php`, not required by the upload endpoints themselves)
 - **Frontend**: Tailwind CSS (via CDN) + vanilla JavaScript `fetch()`
 
 ### Features
 
-- Login and registration with `password_hash()` and `password_verify()`
-- Authenticated dashboard page
-- **Vulnerable upload endpoint**:
-  - Accepts any file type
+- Single dashboard page showing:
+  - A **vulnerable upload** flow
+  - A **secure upload** flow
+- **Vulnerable upload endpoint** (`upload_vulnerable.php`):
+  - Accepts (almost) any file type
   - Keeps the original filename
   - Stores directly under `/uploads`
-- **Secure upload endpoint**:
+- **Secure upload endpoint** (`upload_secure.php`):
   - Enforces extension allow-list: `jpg`, `jpeg`, `png`
   - Validates MIME type with `finfo_file()`
   - Limits file size to 2MB
   - Randomizes stored filenames (e.g., `65abc123.png`)
-  - Updates the user's `profile_image` in the database
-
-Each page includes a short **Security Note** block that explains what is safe / unsafe about the implementation.
+  - Returns a JSON response with the stored path
 
 ### What this project is (attack type)
 
@@ -35,11 +35,12 @@ This project is mainly a demo of:
 ### Prerequisites
 
 - PHP 8+ with extensions: `pdo_mysql`, `fileinfo`
-- MySQL/MariaDB credentials that can create a database/table (or at least access them)
+- MySQL/MariaDB credentials that can create a database  
+  (the included `config.php` will auto-create the demo database)
 
 ### Setup (step by step)
 
-1. **Configure database credentials**
+1. **Configure database credentials (optional for uploads, required if you keep `config.php` as-is)**
 
    Edit `config.php` and set:
 
@@ -52,7 +53,7 @@ This project is mainly a demo of:
 
    Notes:
    - `config.php` automatically creates the database and `users` table if missing.
-   - Sessions are started from `config.php`.
+   - Sessions are started from `config.php`, but there is no longer any login / profile logic.
 
 2. **Start the PHP built-in server**
 
@@ -66,70 +67,52 @@ This project is mainly a demo of:
 
    Visit `http://localhost:8000`
 
-4. **Register and login**
+   - You will land directly on the **Unrestricted File Upload Lab** dashboard (`pages/dashboard.php`).
 
-   - Register a new account
-   - Login to reach the dashboard
+### How to use the lab
 
-### How to use (normal flow)
+1. **From the dashboard**
+   - Click **“Try Vulnerable Upload”** to open `pages/vulnerable_upload.php`
+   - Click **“Try Secure Upload”** to open `pages/secure_upload.php`
 
-1. **Login**
-2. **Go to dashboard**
-3. **Try the two upload buttons**
-   - **Upload (Vulnerable)** posts to `upload_vulnerable.php`
-   - **Upload (Secure)** posts to `upload_secure.php`
-4. **(Secure upload) Set profile image**
+2. **Vulnerable upload flow**
+   - Use the form on `pages/vulnerable_upload.php`
+   - Upload any file (e.g. `.php`, `.exe`, `.txt`, etc., up to the size limit)
+   - The endpoint `upload_vulnerable.php` will:
+     - Save the file under `uploads/` with the original filename
+     - Return JSON with `storedAs` (relative path under `uploads/`)
+   - You can then access the uploaded file directly in the browser, for example:
+
+     ```text
+     http://localhost:8000/uploads/your_file_name.php
+     ```
+
+3. **Secure upload flow**
+   - Use the form on `pages/secure_upload.php`
    - Upload a `.jpg/.jpeg/.png` (max 2MB)
-   - The server saves it under `uploads/` with a randomized filename
-   - The DB column `users.profile_image` is updated
+   - The endpoint `upload_secure.php` will:
+     - Validate extension and MIME type
+     - Enforce max size
+     - Save the file under `uploads/` with a randomized filename
+     - Return JSON with `storedAs` (relative path under `uploads/`)
 
 ### Endpoints / important files
 
-- **Login / Register page**: `index.php` → `pages/index.php`
-- **Dashboard**: `dashboard.php` → `pages/dashboard.php`
-- **Vulnerable upload**: `upload_vulnerable.php`
-- **Secure upload**: `upload_secure.php`
+- **Entry point**: `index.php` → `pages/dashboard.php`
+- **Dashboard (visual demo)**: `pages/dashboard.php`
+- **Vulnerable upload UI**: `pages/vulnerable_upload.php`
+- **Secure upload UI**: `pages/secure_upload.php`
+- **Vulnerable upload API**: `upload_vulnerable.php`
+- **Secure upload API**: `upload_secure.php`
 - **Uploads folder**: `uploads/` (created automatically if missing)
-
-### Attack demo files (`attack_file/`) and when to update them
-
-The `attack_file/` folder contains **example attacker payload scripts** (for training only). These are PHP files you can use to demonstrate what happens when a server allows uploading executable scripts.
-
-Current files:
-
-- `attack_file/get_users.php`: reads users from the database and displays them
-- `attack_file/read_file.php`: reads arbitrary files under the project directory (path traversal-style file read)
-- `attack_file/folder_structure.php`: prints a directory tree
-
-#### When you should update files in `attack_file/`
-
-Update `attack_file/*` when:
-
-- You want to demonstrate a **different payload** (e.g., show DB dump vs. file read vs. directory listing)
-- Your DB credentials or project path assumptions changed (these payloads may use hard-coded connection info / paths)
-- You want the payload to work on another machine/environment (different DB host/user/pass)
-
-#### How to use `attack_file/` (step by step attack simulation)
-
-1. **Log in**
-2. **Open dashboard**
-3. **Use “Upload (Vulnerable)”**
-4. **Upload one file from `attack_file/`**
-   - Example: upload `attack_file/read_file.php`
-5. **Access the uploaded file under `/uploads/`**
-   - If the vulnerable endpoint stores it as-is, you can browse to something like:
-     - `http://localhost:8000/uploads/read_file.php`
-6. **Interact with the payload**
-   - Example for `read_file.php`:
-     - `http://localhost:8000/uploads/read_file.php?file=config.php`
-
-Important:
-- This works **only** because the vulnerable endpoint stores attacker-controlled files in a web-accessible directory and does not restrict executable types.
-- This project is for **education only**. Do not deploy it publicly.
+- **Shared layout**:
+  - `components/header.php`
+  - `components/footer.php`
 
 ### Security Notes
 
-The **vulnerable** endpoint intentionally skips all validations and keeps original filenames. It shows how easy it is to introduce remote code execution if uploaded files are executed by the web server.
+The **vulnerable** endpoint intentionally skips important validations and keeps original filenames.  
+It demonstrates how easy it is to introduce remote code execution if uploaded files are executed by the web server.
 
 The **secure** endpoint demonstrates basic hardening:
 
@@ -137,7 +120,6 @@ The **secure** endpoint demonstrates basic hardening:
 - Validate extension AND MIME type
 - Limit file size
 - Store files with randomized names
-- Store paths in the DB instead of user-controlled data
 
 This project is for **training and demonstration** only and must not be deployed to production as-is.
 

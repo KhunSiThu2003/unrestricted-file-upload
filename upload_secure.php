@@ -1,13 +1,7 @@
 <?php
 require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/auth.php';
 
 header('Content-Type: application/json');
-
-if (!is_logged_in()) {
-    echo json_encode(['success' => false, 'error' => 'Not authenticated.']);
-    exit;
-}
 
 if (!isset($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
     echo json_encode(['success' => false, 'error' => 'No file uploaded or upload error.']);
@@ -52,17 +46,11 @@ if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
     exit;
 }
 
-$stmt = $pdo->prepare('UPDATE users SET profile_image = :pic WHERE id = :id');
-$stmt->execute([
-    ':pic' => $randomName,
-    ':id'  => $_SESSION['user_id'],
-]);
-
 $publicPath = 'uploads/' . $randomName;
 
 echo json_encode([
     'success'      => true,
-    'message'      => 'Secure upload successful. Profile picture updated.',
-    'newProfilePic'=> $publicPath
+    'message'      => 'Secure upload successful.',
+    'storedAs'     => $publicPath
 ]);
 

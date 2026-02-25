@@ -1,21 +1,5 @@
 <?php
 require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../auth.php';
-
-require_login();
-
-$user = get_authenticated_user($pdo);
-if ($user === null) {
-    session_destroy();
-    header('Location: ../index.php');
-    exit;
-}
-
-if (isset($_GET['logout'])) {
-    session_destroy();
-    header('Location: ../index.php');
-    exit;
-}
 
 include __DIR__ . '/../components/header.php';
 ?>

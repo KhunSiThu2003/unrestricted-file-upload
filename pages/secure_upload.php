@@ -1,8 +1,5 @@
 <?php
 require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../auth.php';
-
-require_login();
 
 include __DIR__ . '/../components/header.php';
 ?>
@@ -38,10 +35,19 @@ include __DIR__ . '/../components/header.php';
                         </p>
                     </div>
 
+                    <!-- Back button -->
+                    <div class="mb-4">
+                        <a href="/pages/dashboard.php"
+                           class="inline-flex items-center gap-2 px-3 py-2 rounded bg-neutral-800 hover:bg-neutral-700 text-gray-200 text-sm border border-white/10 transition-colors">
+                            <i class="fas fa-arrow-left text-xs"></i>
+                            <span>Back to Dashboard</span>
+                        </a>
+                    </div>
+
                     <form id="secure-upload-form" class="space-y-6">
                         <!-- File Upload Area -->
-                        <div class="border-2 border-dashed border-emerald-500/20 rounded p-6 sm:p-8 text-center hover:border-emerald-500/40 transition-colors duration-300 bg-neutral-900/30">
-                            <div class="mx-auto w-12 h-12 mb-4 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                        <div class="drop-zone border-2 border-dashed border-emerald-500/20 rounded p-6 sm:p-8 text-center hover:border-emerald-500/50 transition-all duration-300 bg-neutral-900/30 hover:bg-emerald-900/10">
+                            <div class="mx-auto w-12 h-12 mb-4 rounded-full bg-emerald-500/10 flex items-center justify-center drop-zone-icon">
                                 <i class="fas fa-cloud-upload-alt text-emerald-400 text-xl"></i>
                             </div>
                             
@@ -58,8 +64,8 @@ include __DIR__ . '/../components/header.php';
                             </label>
                             
                             <!-- Selected file display -->
-                            <div id="selected-file" class="mt-4 hidden">
-                                <div class="inline-flex items-center gap-3 px-4 py-2 rounded bg-emerald-900/30 border border-emerald-500/20">
+                            <div id="selected-file" class="mt-4 hidden selected-file-wrap">
+                                <div class="inline-flex items-center gap-3 px-4 py-2 rounded bg-emerald-900/30 border border-emerald-500/20 selected-file-inner">
                                     <i class="fas fa-file-image text-emerald-400"></i>
                                     <span id="file-name" class="text-sm text-gray-300"></span>
                                     <button type="button" onclick="clearFileSelection()" class="text-gray-400 hover:text-white">
@@ -103,8 +109,8 @@ include __DIR__ . '/../components/header.php';
 
                         <!-- Upload Button -->
                         <button type="submit" 
-                                class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-all duration-300 border border-emerald-500/30">
-                            <i class="fas fa-cloud-upload-alt text-lg"></i>
+                                class="btn-upload w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-all duration-300 border border-emerald-500/30 active:scale-[0.98]">
+                            <i class="fas fa-cloud-upload-alt text-lg btn-upload-icon"></i>
                             <span>Upload Securely</span>
                         </button>
                     </form>
@@ -116,7 +122,7 @@ include __DIR__ . '/../components/header.php';
 <div id="toast-container" class="fixed bottom-4 right-4 sm:top-4 sm:right-4 space-y-2 z-50 max-w-xs sm:max-w-sm"></div>
 
 <!-- Upload Progress Modal -->
-<div id="upload-progress" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
+<div id="upload-progress" class="progress-overlay fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
     <div class="glass-card rounded p-6 max-w-xs w-full mx-4 border border-emerald-500/30">
         <div class="text-center">
             <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-500/10 flex items-center justify-center">
@@ -145,12 +151,15 @@ include __DIR__ . '/../components/header.php';
             const file = input.files[0];
             fileNameDisplay.textContent = file.name;
             selectedFileDiv.classList.remove('hidden');
+            requestAnimationFrame(() => selectedFileDiv.classList.add('selected-file-visible'));
         }
     }
     
     function clearFileSelection() {
+        const selectedFileDiv = document.getElementById('selected-file');
         document.getElementById('secure_file').value = '';
-        document.getElementById('selected-file').classList.add('hidden');
+        selectedFileDiv.classList.remove('selected-file-visible');
+        setTimeout(() => selectedFileDiv.classList.add('hidden'), 280);
     }
     
     // Drag and drop functionality
@@ -195,7 +204,7 @@ include __DIR__ . '/../components/header.php';
             info: 'fas fa-info-circle'
         };
         
-        const base = 'glass-card px-4 py-3 rounded shadow-lg flex items-start gap-3 animate-slide-in ';
+        const base = 'glass-card toast-item px-4 py-3 rounded shadow-lg flex items-start gap-3 animate-slide-in ';
         if (type === 'success') {
             toast.className = base + 'border-emerald-500/30 bg-emerald-900/80';
         } else if (type === 'error') {
@@ -216,9 +225,9 @@ include __DIR__ . '/../components/header.php';
         
         container.appendChild(toast);
         
-        // Auto-remove after 5 seconds
+        // Auto-remove after 5 seconds with exit animation
         setTimeout(() => {
-            toast.classList.add('opacity-0', 'translate-x-2');
+            toast.classList.add('toast-exit');
             toast.addEventListener('transitionend', () => toast.remove());
         }, 5000);
     }
@@ -241,8 +250,12 @@ include __DIR__ . '/../components/header.php';
                 return;
             }
             
-            // Show progress modal
+            // Show progress modal with animation
             progressModal.classList.remove('hidden');
+            progressModal.classList.add('progress-overlay-visible');
+            requestAnimationFrame(() => {
+                progressModal.classList.add('progress-overlay-show');
+            });
             progressBar.style.width = '10%';
             progressText.textContent = 'Starting security checks...';
             
@@ -274,11 +287,13 @@ include __DIR__ . '/../components/header.php';
                 
                 const data = await res.json();
                 
-                // Close progress modal
+                // Close progress modal with exit animation
+                progressModal.classList.remove('progress-overlay-show');
                 setTimeout(() => {
+                    progressModal.classList.remove('progress-overlay-visible');
                     progressModal.classList.add('hidden');
                     progressBar.style.width = '0%';
-                }, 500);
+                }, 280);
                 
                 if (data.success) {
                     showToast(data.message || 'File uploaded securely!', 'success');
@@ -286,28 +301,121 @@ include __DIR__ . '/../components/header.php';
                     // Clear file input
                     clearFileSelection();
                     
-                    // Update profile picture if needed
-                    if (data.newProfilePic) {
-                        const imgs = document.querySelectorAll('img[alt="Profile Picture"]');
-                        imgs.forEach(img => {
-                            img.src = data.newProfilePic + '&cache=' + Date.now();
-                        });
-                    }
+                    // (Optional) data.storedAs can be used to display the stored path if needed
                 } else {
                     showToast(data.error || 'Upload failed security checks.', 'error');
                 }
             } catch (err) {
-                progressModal.classList.add('hidden');
-                progressBar.style.width = '0%';
+                progressModal.classList.remove('progress-overlay-show');
+                setTimeout(() => {
+                    progressModal.classList.remove('progress-overlay-visible');
+                    progressModal.classList.add('hidden');
+                    progressBar.style.width = '0%';
+                }, 280);
                 showToast('Network error. Please try again.', 'error');
                 console.error('Upload error:', err);
             }
         });
     })();
     
-    // Add CSS animation for toast
+    // Add CSS animations (mirroring vulnerable upload UI)
     const style = document.createElement('style');
     style.textContent = `
+        .glass-card {
+            background: rgba(38, 38, 38, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        /* Page & card entrance */
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-card-in {
+            animation: cardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        /* Drop zone & icon */
+        .drop-zone {
+            transition: border-color 0.3s, background 0.3s, transform 0.25s ease;
+        }
+        .drop-zone:hover {
+            transform: translateY(-1px);
+        }
+        @keyframes dropZoneIcon {
+            0%, 100% { transform: translateY(0); opacity: 0.9; }
+            50% { transform: translateY(-3px); opacity: 1; }
+        }
+        .drop-zone:hover .drop-zone-icon {
+            animation: dropZoneIcon 1.2s ease-in-out infinite;
+        }
+        
+        /* Selected file in/out */
+        .selected-file-wrap {
+            overflow: hidden;
+            transition: opacity 0.28s ease, max-height 0.32s ease, margin 0.28s ease;
+            max-height: 0;
+            opacity: 0;
+        }
+        .selected-file-wrap.selected-file-visible {
+            max-height: 80px;
+            opacity: 1;
+        }
+        .selected-file-wrap:not(.selected-file-visible) .selected-file-inner {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        .selected-file-inner {
+            transition: opacity 0.25s ease 0.06s, transform 0.25s ease 0.06s;
+        }
+        .selected-file-wrap.selected-file-visible .selected-file-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Upload button (no icon animation) */
+        .btn-upload {
+        }
+        
+        /* Progress overlay */
+        .progress-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s;
+        }
+        .progress-overlay.progress-overlay-visible {
+            visibility: visible;
+        }
+        .progress-overlay.progress-overlay-show {
+            opacity: 1;
+        }
+        .progress-overlay.progress-overlay-show .glass-card {
+            animation: progressModalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .progress-overlay:not(.progress-overlay-show) .glass-card {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.22s ease, opacity 0.22s ease;
+        }
+        @keyframes progressModalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        /* Toast */
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -323,10 +431,12 @@ include __DIR__ . '/../components/header.php';
             animation: slideIn 0.3s ease-out;
         }
         
-        .glass-card {
-            background: rgba(38, 38, 38, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .toast-item {
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .toast-item.toast-exit {
+            opacity: 0;
+            transform: translateX(100%);
         }
     `;
     document.head.appendChild(style);

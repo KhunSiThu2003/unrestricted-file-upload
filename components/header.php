@@ -302,9 +302,6 @@
     <div class="security-icon-ring"></div>
     <i class="fas fa-exclamation-triangle text-2xl text-amber-300"></i>
 </div>
-<?php if (isset($_SESSION['user_id'])): ?>
-<?php include __DIR__ . '/navBar.php'; ?>
-<?php endif; ?>
 
 <main class="min-h-screen max-w-7xl mx-auto flex flex-col justify-center items-center">
 
