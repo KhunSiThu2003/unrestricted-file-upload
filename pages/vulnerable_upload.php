@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../config.php';
 
 include __DIR__ . '/../components/header.php';
+
 ?>
 <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 vuln-page">
     <div class="w-full glass-card rounded overflow-hidden border border-rose-500/30 bg-neutral-900/40 vuln-card animate-card-in">
@@ -61,7 +61,7 @@ include __DIR__ . '/../components/header.php';
                             
                             <label for="vuln_file" class="cursor-pointer block">
                                 <h4 class="text-lg font-medium text-white mb-2">Upload any file type (dangerous)</h4>
-                                <p class="text-sm text-gray-400 mb-4">No restrictions: .php, .exe, .sh, etc. (Max 10MB)</p>
+                                <p class="text-sm text-gray-400 mb-4">No restrictions: .php, .exe, .sh, etc. </p>
                                 <div class="btn-choose inline-flex items-center gap-2 px-4 py-2 rounded bg-rose-600 hover:bg-rose-500 text-white font-medium transition-all duration-300 border border-rose-500/30 active:scale-95">
                                     <i class="fas fa-file-upload btn-choose-icon"></i>
                                     <span>Choose File</span>
@@ -94,7 +94,7 @@ include __DIR__ . '/../components/header.php';
                                     <i class="fas fa-expand-arrows-alt text-rose-400 text-sm"></i>
                                 </div>
                                 <p class="text-xs font-medium text-white">Large Files</p>
-                                <p class="text-xs text-rose-400">Up to 10MB</p>
+                                
                             </div>
                             <div class="vuln-indicator vuln-indicator-3 bg-neutral-900/40 rounded p-3 text-center border border-rose-500/10">
                                 <div class="w-8 h-8 mx-auto mb-2 rounded-full bg-rose-500/10 flex items-center justify-center">

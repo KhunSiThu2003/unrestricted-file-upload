@@ -10,7 +10,7 @@ if (!isset($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
 
 $file       = $_FILES['file'];
 $maxSize    = 2 * 1024 * 1024;
-$allowedExt = ['jpg', 'jpeg', 'png'];
+$allowedExt = ['jpg', 'png'];
 
 if ($file['size'] > $maxSize) {
     echo json_encode(['success' => false, 'error' => 'File is too large. Max size is 2MB.']);

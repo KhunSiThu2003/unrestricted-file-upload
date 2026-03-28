@@ -1,8 +1,8 @@
 <?php
-$db_host = 'sql311.infinityfree.com';
-$db_name = 'if0_41246714_unrestricted_file_upload';
-$db_user = 'if0_41246714';
-$db_pass = 'T0YvDVCVfVybF';
+$db_host = '127.0.0.1';
+$db_name = 'unrestricted_upload_db';
+$db_user = 'khunsithu';
+$db_pass = 'Asdf@1234';
 
 $pdoOptions = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
